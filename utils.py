@@ -32,6 +32,7 @@ def vis_detections(im, dets, thresh=0.5, show_text=True):
                  fontsize=10)
     plt.axis('off')
     plt.tight_layout()
+    plt.savefig('out.png')
     plt.show()
 
 

@@ -28,6 +28,7 @@ detections = net.detect_on_image(img, target_size, device, is_pad=False, keep_th
 vis_detections(img, detections, conf_thresh, show_text=False)
 
 ```
+<img src="https://raw.githubusercontent.com/vlad3996/FaceDetection-DSFD/master/imgs/out.png"/>
 
 
 ### Requirements
@@ -51,6 +52,54 @@ python demo.py
 ```
 
 
+### ONNX export 
+
+``` bash
+pip install onnx
+```
+```python
+
+import os
+import torch
+from face_ssd_infer import SSD
+
+target_size = (800, 800)
+
+net = SSD("onnx_export")
+net.load_state_dict(torch.load('weights/WIDERFace_DSFD_RES152.pth'))
+net.eval();
+
+
+model_path = "weights/detector.onnx"
+if os.path.isfile(model_path):
+    os.remove(model_path)
+torch.onnx.export(net, torch.zeros((1,3,*target_size)), model_path,verbose=True, input_names=["Input"], output_names=["Output"]);
+
+```
+
+
+### Caffe 2 inference 
+
+(obtain boxes and confidences)
+
+
+```python
+import numpy as np
+import onnx
+import caffe2
+import caffe2.python.onnx.backend
+
+model_path = "weights/detector.onnx"
+onnx_model = onnx.load(model_path)
+
+W = {
+    onnx_model.graph.input[0].name: np.zeros((1,3,800,800)).astype(np.float32)
+}
+
+model = caffe2.python.onnx.backend.prepare(onnx_model)
+out = model.run(W)
+out[0]
+```
 
 ### Citation
 If you find DSFD useful in your research, please consider citing: 
