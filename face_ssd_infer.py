@@ -6,12 +6,6 @@ from layers import Detect, get_prior_boxes, FEM, pa_multibox, mio_module, upsamp
 from utils import resize_image
 
 
-
-import cv2
-import numpy as np
-from utils import bbox_vote
-
-
 class SSD(nn.Module):
 
     def __init__(self, phase, nms_thresh=0.3, nms_conf_thresh=0.01):
@@ -137,7 +131,6 @@ class SSD(nn.Module):
         else:
             output = torch.cat((face_loc, face_conf), 2)
         return output
-
 
     def detect_on_image(self, source_image, target_size, device, is_pad=False, keep_thresh=0.3):
 
