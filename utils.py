@@ -35,6 +35,25 @@ def vis_detections(im, dets, thresh=0.5, show_text=True):
     plt.savefig('out.png')
     plt.show()
 
+def get_detections(dets, thresh=0.5):
+    """Draw detected bounding boxes."""
+
+    class_name = 'face'
+    inds = np.where(dets[:, -1] >= thresh)[0] if dets is not None else []
+
+    bboxs = list()
+
+    if len(inds) == 0:
+        return bboxs
+
+    for i in inds:
+        bbox = dets[i]
+        bboxs.append(bbox)
+        #score = dets[i, -1]
+        
+    return bboxs
+
+
 
 def bbox_vote(det):
     order = det[:, 4].ravel().argsort()[::-1]

@@ -2,8 +2,7 @@ import cv2
 import torch
 import time
 from face_ssd_infer import SSD
-from utils import vis_detections
-
+from utils import vis_detections, get_detections
 device = torch.device("cuda")
 conf_thresh = 0.3
 target_size = (800, 800)
@@ -22,3 +21,5 @@ detections = net.detect_on_image(img, target_size, device, is_pad=False, keep_th
 t2 = time.time()
 print("time: {:.2f}".format(t2-t1))
 vis_detections(img, detections, conf_thresh, show_text=False)
+bboxs = get_detections(detections, conf_thresh)
+print(bboxs)
