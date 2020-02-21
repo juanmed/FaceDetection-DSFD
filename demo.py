@@ -20,6 +20,12 @@ t1 = time.time()
 detections = net.detect_on_image(img, target_size, device, is_pad=False, keep_thresh=conf_thresh)
 t2 = time.time()
 print("time: {:.2f}".format(t2-t1))
+
+t1 = time.time()
+detections = net.detect_on_image(img, target_size, device, is_pad=False, keep_thresh=conf_thresh)
+t2 = time.time()
+print("time: {:.2f}".format(t2-t1))
+
 vis_detections(img, detections, conf_thresh, show_text=False)
 bboxs = get_detections(detections, conf_thresh)
 print(bboxs)

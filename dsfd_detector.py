@@ -4,6 +4,7 @@ import time
 from face_ssd_infer import SSD
 from utils import get_detections
 
+
 class DSFD_detector():
 
 	def __init__(self, conf_thresh = 0.3, target_size = (800, 800), device = 'cuda'):
@@ -19,3 +20,14 @@ class DSFD_detector():
 		detections = self.net.detect_on_image(image, self.target_size, self.device, is_pad=False, keep_thresh=conf_thresh)
 		bboxs = get_detections(detections, self.conf_thresh)
 		return bboxs
+
+if __name__ == '__main__':
+	
+	print("hola")
+
+	img_path = '/home/fer/Videos/YDXJ2900.jpg'
+
+	detector = DSFD_detector()
+	img = cv2.imread(img_path, cv2.IMREAD_COLOR)
+	bboxs = detector.detect(img)
+	print(bboxs)
