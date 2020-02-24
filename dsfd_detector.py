@@ -13,7 +13,7 @@ class DSFD_detector():
         self.conf_thresh = conf_thresh
         self.target_size = (800, 800)
         self.net = SSD("test")
-        self.net.load_state_dict(torch.load('./weights/WIDERFace_DSFD_RES152.pth'))
+        self.net.load_state_dict(torch.load('/home/fer/git_clone/dfdc/FaceDetection_DSFD/weights/WIDERFace_DSFD_RES152.pth'))
         self.net.to(self.device)
 
     def detect(self, image):
